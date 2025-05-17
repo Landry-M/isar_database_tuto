@@ -6,4 +6,5 @@ class Article {
   Id id = Isar.autoIncrement;
   String? title;
   String? description;
+ 
 }

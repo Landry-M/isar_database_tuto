@@ -1,16 +1,19 @@
-import "package:flutter/material.dart";
-import "package:isar/isar.dart";
-import "package:isar_tuto/article.dart";
-import "package:path_provider/path_provider.dart";
+import 'package:isar/isar.dart';
+import 'package:isar_tuto/article.dart';
+import 'package:path_provider/path_provider.dart';
 
 class IsarServices {
-  Future<Isar> initIsar() async {
-    final dir = await getApplicationDocumentsDirectory();
-    final _isar = await Isar.open(
-      [ArticleSchema],
-      directory: dir.path,
-    );
+  static Isar? _isar;
 
-    return _isar;
+  Future<Isar> initIsar() async {
+    if (Isar.instanceNames.isEmpty) {
+      final dir = await getApplicationDocumentsDirectory();
+      _isar = await Isar.open(
+        [ArticleSchema],
+        inspector: true,
+        directory: dir.path,
+      );
+    }
+    return _isar!;
   }
 }
